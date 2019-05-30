@@ -20,7 +20,15 @@ resources:
     storage_account_name: ((storage_account_name))
     storage_account_key: ((storage_access_key)) 
     container: "concourse"
-    regexp: foobar-(.*).zip
+    regexp: platform-automation-tasks-(.*).zip
+
+- name: platform-automation-image
+  type: azure-blobstore
+  source:
+    storage_account_name: ((storage_account_name))
+    storage_account_key: ((storage_access_key)) 
+    container: "concourse"
+    regexp: platform-automation-image-(.*).tgz
 ```
 
 
