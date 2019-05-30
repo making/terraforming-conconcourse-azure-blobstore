@@ -38,7 +38,7 @@ resource "azurerm_storage_account" "concourse_root_storage_account" {
 }
 
 resource "azurerm_storage_container" "concourse_storage_container" {
-  name                  = "concourse"
+  name                  = "${var.container_name}"
   depends_on            = ["azurerm_storage_account.concourse_root_storage_account"]
   resource_group_name   = "${azurerm_resource_group.concourse.name}"
   storage_account_name  = "${azurerm_storage_account.concourse_root_storage_account.name}"
@@ -62,11 +62,19 @@ variable "client_secret" {}
 
 variable "location" {}
 
+variable "container_name" {
+  type = "string"
+  default = "concourse"
+}
+
 
 output "storage_account_name" {
   value = "${azurerm_storage_account.concourse_root_storage_account.name}"
 }
 output "storage_access_key" {
   value = "${azurerm_storage_account.concourse_root_storage_account.primary_access_key}"
+}
+output "container_name" {
+  value = "${azurerm_storage_container.concourse_storage_container.name}"
 }
 
