@@ -38,3 +38,20 @@ storage_account_name: $(terraform output storage_account_name)
 storage_access_key: $(terraform output storage_access_key)
 EOF
 ```
+
+
+
+```
+export CONTAINER=$(terraform output container_name)
+export AZURE_STORAGE_ACCOUNT=$(terraform output storage_account_name)
+export AZURE_STORAGE_KEY=$(terraform output storage_access_key)
+```
+
+```
+pivnet download-product-files -p platform-automation -r 3.0.1 --glob '*'
+
+az storage blob upload -c ${CONTAINER} -n platform-automation-image-3.0.1.tgz -f platform-automation-image-3.0.1.tgz
+az storage blob upload -c ${CONTAINER} -n platform-automation-tasks-3.0.1.zip -f platform-automation-tasks-3.0.1.zip
+
+az storage blob list -c ${CONTAINER}
+```
